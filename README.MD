@@ -187,6 +187,57 @@ Fluxo principal:
     |  • Buscar por Origem                      |
     +-------------------------------------------+
 
+```mermaid
+
+classDiagram
+    class Alarme {
+        +Long id
+        +String origem
+        +String severidade
+        +String mensagem
+        +LocalDateTime timestamp
+        +String correlacaoId
+    }
+
+    class AlarmeController {
+        +criar(Alarme alarme)
+        +listar()
+        +buscarPorSeveridade(String sev)
+        +buscarPorOrigem(String origem)
+        +enviarParaFila(Alarme alarme)
+    }
+
+    class AlarmeProducer {
+        +enviarAlarme(Alarme alarme)
+    }
+
+    class AlarmeConsumer {
+        +receberMensagem(Alarme alarme)
+    }
+
+    class AlarmeService {
+        +salvar(Alarme alarme)
+        +listarTodos()
+        +buscarPorSeveridade(String sev)
+        +buscarPorOrigem(String origem)
+    }
+
+    class AlarmeRepository {
+        +findBySeveridade(String sev)
+        +findByOrigem(String origem)
+    }
+
+    %% Relações
+    AlarmeController --> AlarmeService : usa
+    AlarmeController --> AlarmeProducer : envia para fila
+    AlarmeProducer --> Alarme : publica
+    AlarmeConsumer --> AlarmeService : processa
+    AlarmeService --> AlarmeRepository : persiste
+    AlarmeRepository --> Alarme : entidade
+```
+
+
+
 
 ---
 
