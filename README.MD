@@ -59,7 +59,7 @@ Criar um sistema capaz de:
 
 # 🛠 Tecnologias Utilizadas
 
-- Java
+- Java 21
 - Spring Boot
 - Spring Web
 - Spring AMQP
